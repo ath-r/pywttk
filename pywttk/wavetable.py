@@ -6,9 +6,9 @@ Created on Sun Apr  2 15:33:13 2023
 """
 
 import numpy as np
-import wttk.fft as fft
-import wttk.readwrite as rw
-import wttk.maths as maths
+import pywttk.fft as fft
+import pywttk.readwrite as rw
+import pywttk.maths as maths
 
 def is_time(data):
     if type(data) is np.ndarray:
@@ -78,10 +78,11 @@ Use numpy.ndarray of numpy.complex128 for frequency domain data.""".format(ndarr
     def get_freq(self):
         return np.copy(self._table_freq)
     
-    def get_freq_plot(self):
+    def get_freq_plot(self, normalize = True, threshold = -100):
         plot = maths.v2db(np.abs(self._table_freq))
-        plot -= np.max(plot)
-        plot = np.maximum(plot, -100)
+        plot[0] = -120
+        if normalize: plot -= np.max(plot)
+        plot = np.maximum(plot, threshold)
         plot[0] = 0
         return plot
     
@@ -111,7 +112,7 @@ def wtop(func):
 #Frequency domain operations
 ##########################################
 
-import wttk.freqdomain as fd
+import pywttk.freqdomain as fd
 
 @wtop
 def resize(wt, new_size, copy = False):
@@ -147,12 +148,12 @@ def set_phases(wt, phase = np.pi / 2, copy = False):
 #Time domain operations
 ##########################################
 
-import wttk.timedomain as td
+import pywttk.timedomain as td
 
 @wtop
 def normalize_amplitude(wt, copy = False):
     data = wt.get_time()
-    return td.normalize_ampltude(data)
+    return td.normalize_amplitude(data)
 
 @wtop
 def normalize_dc(wt, copy = False):
@@ -178,7 +179,7 @@ def normalize_dc_fit(wt, copy = False):
 #Waveform synthesis
 ##########################################
 
-import wttk.waveform as wf
+import pywttk.waveform as wf
 
 def saw(size = 2048):
     wavetable = Wavetable(wf.saw(size, ifft = False))

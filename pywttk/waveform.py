@@ -6,9 +6,9 @@ Created on Mon Apr  3 13:50:50 2023
 """
 import numpy as np
 
-import wttk.fft as fft
-import wttk.freqdomain as fd
-import wttk.maths as maths
+import pywttk.fft as fft
+import pywttk.freqdomain as fd
+import pywttk.maths as maths
 
 def saw(size, ifft = True):
     

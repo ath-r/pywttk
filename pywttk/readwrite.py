@@ -44,7 +44,7 @@ def write_wav(filename, data, samplerate = 48000):
     if data.dtype == np.float32:
         subtype = "FLOAT"
     elif data.dtype == np.float64:
-        subtype = "FLOAT"
+        subtype = "DOUBLE"
     elif data.dtype == np.int32:
         subtype = "PCM_32"
     elif data.dtype == np.int16:
